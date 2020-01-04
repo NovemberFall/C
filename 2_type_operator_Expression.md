@@ -18,7 +18,7 @@ int main(){
     char ch = 'A';
     putchar(ch);
     printf("%c", 'A');
-
+    //ch size: 1,   A size: 4
     return 0;
 }
 ```

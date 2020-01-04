@@ -9,8 +9,16 @@ int main1(){
     return 0;
 }
 
-int main(){
+int main2(){
     char ch = 'A';
     printf("%d, %d", sizeof(ch), sizeof('A'));
+    return 0;
+}
+
+int main(){
+    char ch = '1';
+    int num = 1;
+    printf('%d, %d', sizeof(ch), sizeof(num));
+    printf("\n%d", ch);
     return 0;
 }
