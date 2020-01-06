@@ -206,6 +206,7 @@ int main()
 - since a/b, is `int/int = int`, ans is 2, not 2.5
 - then assigned to our float r
 ![](img/2020-01-04-11-30-57.png)
+![](img/2020-01-05-16-47-12.png)
 - update
 ```c++
 #include <stdio.h>
