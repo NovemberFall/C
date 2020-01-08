@@ -117,23 +117,238 @@ int main(){
 
 
 ## Address arithmetic
+![](img/2020-01-07-22-49-42.png)
+- when we talk about the address, 6710, + 1, is at x 4 bytes in the memory, so 6711 cannot be the address of any other intercept because it's been occupied here
 ```c++
+#include<stdio.h>
+int main(){
+    int x = 10;
+    int *p;
+    p = &x;
 
+    printf("Content of p: %lu\n", p);
+
+    p = p+1;
+    printf("Content of p: %lu\n", p);
+    
+    return 0;
+}
 ```
+![](img/2020-01-07-22-55-01.png)
+- 6376 + 4 = 6380
+---
+
+
+## More on pointer
 
 
 
 
+## How and when to use pointer in C program
+- look at an example
+```c++
+#include <stdio.h>
 
+void swap(int a, int b)
+{
+    int temp;
+    temp = a;
+    a = b;
+    b = temp;
+}
+
+int main()
+{
+    int x = 100, y = 200;
+
+    printf("x = %d, y = %d\n", x, y);
+    swap(x , y);
+    printf("x = %d, y = %d\n", x, y);
+
+    return 0;
+}
+```
+![](img/2020-01-07-23-19-27.png)
+- a, b exchange the value, but x, y still didn't change
+- because x, y are out of function
+- we can use pointer
+```c++
+#include <stdio.h>
+
+void swap(int *a, int *b)
+{
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main()
+{
+    int x = 100, y = 200;
+
+    printf("x = %d, y = %d\n", x, y);
+    swap(&x , &y);
+    printf("x = %d, y = %d\n", x, y);
+
+    return 0;
+}
+```
+![](img/2020-01-07-23-34-07.png)
+---
+
+
+## More programming example
+
+
+
+
+## Relationship between one dimensional array and pointer
+![](img/2020-01-07-23-44-42.png)
+```c++
+#include<stdio.h>
+int main(){
+    int x[] = {10, 20, 30, 40, 50};
+
+    printf("%p, %p\n", x, &x[0]);
+    return 0;
+}
+```
+![](img/2020-01-07-23-46-14.png)
+
+-
+```c++
+#include <stdio.h>
+
+int main()
+{
+    int x[] = {10, 20, 30, 40, 50};
+
+    printf("%p, %p\n", x, &x[0]);
+
+    int i = 0;
+    printf("\nContent of the array is: \n");
+    for (i = 0; i < 5; i++)
+    {
+        printf("%4d ", *(x + i));
+    }
+    printf("\n");
+
+    return 0;
+}
+```
+![](img/2020-01-07-23-50-08.png)
+![](img/2020-01-07-23-52-09.png)
+![](img/2020-01-07-23-52-53.png)
+---
+
+## Passing one dimensional array to function
 
 ```c++
-```
-```c++
-```
+#include<stdio.h>
 
-```c++
-```
+void printArray(int *p_arr, int n){
+    int i;
+    printf("Content of array: ");
+    for(i=0; i<n; i++){
+        printf("%4d", *(p_arr + i));
+    }
+    printf("\n");
+}
 
-```c++
+int main(){
+    int x[] ={10, 20, 30, 40, 50};
+    int y[] ={1, 2, 3, 4, 5, 6};
+    printArray(x, 5);
+    printArray(y, 6);
+    return 0;
+}
 ```
+![](img/2020-01-08-00-02-40.png)
+---
+
+## more example on passing one dimensional array to function
+```c++
+#include <stdio.h>
+
+void toggleChar(char *ptr)
+{
+    int i;
+    for (i = 0; *(ptr + i) != '\0'; i++)
+    {
+        if (*(ptr + i) >= 'A' && *(ptr + i) <= 'Z')
+        {
+            *(ptr + i) = *(ptr + i) + 32;
+        }else if(*(ptr + i) >= 'a' && *(ptr + i) <= 'z'){
+            *(ptr + i) = *(ptr + i) - 32;
+        }
+    }
+}
+
+int main()
+{
+    char str[100];
+
+    printf("Enter a string: ");
+    scanf("%[^\n]", str);
+
+    toggleChar(str);
+    printf("Toggled characters : %s\n", str);
+    return 0;
+}
+```
+![](img/2020-01-08-00-14-18.png)
+---
+
+
+## Clony with 8 cells - simulation
+
+
+
+## One more example - Passing a string to a function
+```c++
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 30
+/**
+ * Write a function split that receives a string like "book*abacus" and splits it into two strings,
+ * first and last. The first contains all the characters prior to that * and last contains all the 
+ * characters after that *.
+ * We can assume that there is only one * there.
+ * 
+ * prior to (在...之前)
+*/
+
+void split(char str[], char first[], char second[]){
+    int i = 0;
+    int j = 0;
+    while(str[i] != '*'){
+        first[j] = str[i];
+        i++; j++;
+    }
+    first[j] = '\0'; //first terminate
+    i = i+1;
+    j = 0;
+    while(str[i] != '\0'){
+        second[j] = str[i];
+        i++; j++;
+    }
+    second[j] = '\0';
+}
+
+int main(){
+    char str[] = "book*abacus";
+    char first[MAX];
+    char second[MAX];
+    split(str, first, second);
+    printf("First Part: %s\n", first);
+    printf("Second Part: %s\n", second);
+
+    return 0;
+}
+```
+![](img/2020-01-08-08-57-52.png)
+---
+
+
 
