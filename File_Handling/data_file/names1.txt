@@ -1,0 +1,8 @@
+Mark Zuckerburg,5000
+Steve Jobs,4000
+Time Berners-Lee,3000
+Dennis Ritchie,5000
+Steven Spielberg,3000
+Arnold Schwarzenegger,3500
+Larry Page,8000
+Sergey Brin,8000

@@ -1,0 +1,37 @@
+	In order to work with data file, we need a FILe pointer in our program,
+	FILE is a struct type declared in stdio.h, FILE pointer will hold the address 
+	of the file object corresponding to the file with which we are suppose to 
+	interact.
+    
+    To open the file, we ned to call the library function fopen() [declared in 
+    stdio.h]. fopen function opens the specified file in specified mode and
+    creates the FILE object, if fopen is successful in opening the file then 
+    it returns the address of the corresponding FILE object, otherwise if fopen
+    fails to open the file (in many occasion this may happen such as if the 
+    supplied path or file name is invalid, permission of file creation is not
+    available or wrong mode) then fopen returns NULL. It's always recommended 
+    to check the return value of fopen before proceeding with the operations with
+    the file.
+    
+	fopen() requires 2 parameters, first is the name of the file with path, if path 
+	is not supplied then the file is looked up in the current directory from where this 
+	program is executed. The second parameter to fopen is the mode of operations. 
+	The different available mode of operations are given in the following list.
+
+
+                Modes of file operations
+                ------------------------
+     Exclusive
+                TEXT            BINARY
+     WRITE      "w"             "wb"
+     READ       "r"             "rb"
+     APPEND     "a"             "ab"
+     
+     Multiple
+     
+     WRITE      "w+"             "wb+" or "w+b"
+     READ       "r+"             "rb+" or "r+b"
+     APPEND     "a+"             "ab+" or "a+b"
+      
+     
+    

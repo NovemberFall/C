@@ -1,0 +1,8 @@
+Mark Zuckerburg            5000 0.00   0.00    5000.00 
+Steve Jobs                 4000 0.00   0.00    4000.00 
+Time Berners-Lee           3000 0.00   0.00    3000.00 
+Dennis Ritchie             5000 0.00   0.00    5000.00 
+Steven Spielberg           3000 0.00   0.00    3000.00 
+Arnold Schwarzenegger       3500 0.00   0.00    3500.00 
+Larry Page                 8000 0.00   0.00    8000.00 
+Sergey Brin                8000 0.00   0.00    8000.00 
