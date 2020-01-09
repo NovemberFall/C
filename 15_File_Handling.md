@@ -280,6 +280,9 @@ int main()
 
 
 ## Reading in binary mode - fread function
+- syntax: `size_t fread(void * buffer, size_t size, size_t count, FILE * stream)`
+- Return Value: The function returns the number of objects read successfully. 
+
 ```c++
 #include <stdio.h>
 
@@ -339,4 +342,140 @@ int main()
 }
 ```
 ![](img/2020-01-08-20-58-03.png)
+- `fseek(fp, 2 * sizeof(double), SEEK_SET);`
+- at the beginning, pointer point to 0, 
+- after move `2 * sizeof(double)`
+- SEEK_SET : It denotes starting of the file. means at 0
+- so if this is goint to move 16 bytes from the beginning
+![](img/2020-01-08-22-11-00.png)
+- SEEK_END : It denotes end of the file.
+- SEEK_CUR : It denotes file pointer’s current position.
+-
+- one more example:
+- `fseek(fp,-20L,2)`, 指的是文件末尾偏移20个字节, 第二个参数指的是偏移方向和偏移量
+- `-20L`指的是后退20个字节； 
+- 第三个参数指的是从哪里开始偏移; 0=文件开头，1=起始位置，2=文件末尾
+
+
+
+- update
+```c++
+#include <stdio.h>
+
+//content of data.bin -> <BOF> 10.25, 5.54, 8.96, 12.45, 100.01 <EOF>
+int main()
+{
+    FILE *fp;
+    double val;
+
+    fp = fopen("/Users/Git/gitc/File_Handling/data_file/data.bin", "rb");
+    if (fp == NULL)
+    {
+        printf("Unable to open file\n");
+        return 0;
+    }
+
+    fseek(fp, 2 * sizeof(double), SEEK_SET);
+    fread((void *)&val, sizeof(double), 1, fp);
+
+    printf("3rd rec: %lf\n", val);
+
+    fseek(fp, -1 * sizeof(double), SEEK_END);
+    fread((void *)&val, sizeof(double), 1, fp);
+
+    printf("Last rec: %lf\n", val);
+
+    fseek(fp, 1 * sizeof(double), SEEK_SET);
+    fread((void *)&val, sizeof(double), 1, fp);
+
+    printf("2nd rec: %lf\n", val);
+
+    printf("\n");
+    fclose(fp);
+    return 0;
+}
+```
+![](img/2020-01-08-23-42-27.png)
 ---
+
+
+## Calculating the number of records in a binary file using ftell
+- ftell() in C is used to find out the position of file pointer in the file with respect to starting of the file. Syntax of ftell() is:
+- syntax: `long ftell(FILE *pointer)`
+```c++
+//Calculating the number of records in a binary file using ftell
+#include <stdio.h>
+
+//content of data.bin -> <BOF> 10.25, 5.54, 8.96, 12.45, 100.01 <EOF>
+int main()
+{
+    FILE *fp;
+
+
+    fp = fopen("/Users/Git/gitc/File_Handling/data_file/data.bin", "rb");
+    if (fp == NULL)
+    {
+        printf("Unable to open file\n");
+        return 0;
+    }
+    long size;
+    size = ftell(fp);
+    printf("Size = %ld\n", size);
+
+    fseek(fp, 0L, 2);
+    size = ftell(fp);
+    printf("Size = %ld\n", size);
+
+    printf("\n");
+    fclose(fp);
+    return 0;
+}
+```
+![](img/2020-01-09-08-47-37.png)
+-
+- update
+```c++
+//Calculating the number of records in a binary file using ftell
+#include <stdio.h>
+#include<stdlib.h>
+
+//content of data.bin -> <BOF> 10.25, 5.54, 8.96, 12.45, 100.01 <EOF>
+int main()
+{
+    FILE *fp;
+
+
+    fp = fopen("/Users/Git/gitc/File_Handling/data_file/data.bin", "rb");
+    if (fp == NULL)
+    {
+        printf("Unable to open file\n");
+        return 0;
+    }
+    long size;
+    size = ftell(fp);
+    printf("Size = %ld\n", size);
+
+    fseek(fp, 0L, 2);
+    size = ftell(fp);
+    printf("Size = %ld\n", size);
+
+    int n = size/sizeof(double);
+    printf("Num of records: %d\n", n);
+
+    double *data;
+    data = (double *)malloc(sizeof(double) * n);
+    fseek(fp, 0L, 0);
+
+    fread((void *)data, sizeof(double), n, fp);
+
+    for(int i=0; i<n; i++){
+        printf("%10.2lf\n", data[i]);
+    }
+
+    printf("\n");
+    fclose(fp);
+    return 0;
+}
+```
+
+![](img/2020-01-09-09-29-44.png)

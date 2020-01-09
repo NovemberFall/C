@@ -18,6 +18,16 @@ int main()
 
     printf("3rd rec: %lf\n", val);
 
+    fseek(fp, -1 * sizeof(double), SEEK_END);
+    fread((void *)&val, sizeof(double), 1, fp);
+
+    printf("Last rec: %lf\n", val);
+
+    fseek(fp, 1 * sizeof(double), SEEK_SET);
+    fread((void *)&val, sizeof(double), 1, fp);
+
+    printf("2nd rec: %lf\n", val);
+
     printf("\n");
     fclose(fp);
     return 0;
