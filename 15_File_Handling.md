@@ -253,33 +253,90 @@ int main(){
 
 ## Writing in binary mode - fwrite function
 ```c++
+#include <stdio.h>
+
+int main()
+{
+    FILE *fp;
+    double data[] = {10.25, 5.54, 8.96, 12.45, 100.01};
+
+    fp = fopen("/Users/Git/gitc/File_Handling/data_file/data.bin", "wb");
+    if (fp == NULL)
+    {
+        printf("Unable to open file\n");
+        return 0;
+    }
+
+    // fwrite((void *)(data + 1), sizeof(double), 2, fp);
+    int nObject = fwrite((void *)(data), sizeof(double), 5, fp);
+    printf("Total elements written: %d\n", nObject);
+
+    fclose(fp);
+    return 0;
+}
 ```
+![](img/2020-01-08-20-44-34.png)
+---
 
 
+## Reading in binary mode - fread function
 ```c++
+#include <stdio.h>
+
+int main()
+{
+    FILE *fp;
+    double data[5];
+
+    fp = fopen("/Users/Git/gitc/File_Handling/data_file/data.bin", "rb");
+    if (fp == NULL)
+    {
+        printf("Unable to open file\n");
+        return 0;
+    }
+
+    int nObject = fread((void *)(data), sizeof(double), 5, fp);
+    printf("Total elements written: %d\n", nObject);
+
+    int i;
+    printf("Content of array: ");
+    for(i=0; i<5; i++){
+        printf("%10.2lf", data[i]);
+    }
+    printf("\n");
+    fclose(fp);
+    return 0;
+}
 ```
+![](img/2020-01-08-20-50-55.png)
+---
 
-
-
+## Moving the file pointer at any desired location using fseek
 ```c++
+#include <stdio.h>
+
+//content of data.bin -> <BOF> 10.25, 5.54, 8.96, 12.45, 100.01 <EOF>
+int main()
+{
+    FILE *fp;
+    double val;
+
+    fp = fopen("/Users/Git/gitc/File_Handling/data_file/data.bin", "rb");
+    if (fp == NULL)
+    {
+        printf("Unable to open file\n");
+        return 0;
+    }
+
+    fseek(fp, 2 * sizeof(double), SEEK_SET);
+    fread((void *)&val, sizeof(double), 1, fp);
+
+    printf("3rd rec: %lf\n", val);
+
+    printf("\n");
+    fclose(fp);
+    return 0;
+}
 ```
-
-
-```c++
-```
-
-
-
-```c++
-```
-
-
-```c++
-```
-
-
-
-```c++
-```
-
-
+![](img/2020-01-08-20-58-03.png)
+---
