@@ -1,0 +1,1 @@
+## Introduction to file handling, writing characters into a text file using fputc()
