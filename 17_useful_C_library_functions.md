@@ -141,51 +141,105 @@ int main(){
 
 
 ```c++
+#include<stdio.h>
+#include<string.h>
 
+int main(){
+    char my_str[]="Blah blah, Hello World!!";
+    memset(my_str, '@', 4);
+
+    printf("%s\n", my_str);
+    return 0;
+}
 ```
+![](img/2020-01-09-22-30-01.png)
+---
+
+- update
+
+```c++
+#include<stdio.h>
+#include<string.h>
+
+int main(){
+    char my_str[]="Blah blah, Hello World!!";
+    memset(my_str + 5, '@', 4);
+
+    printf("%s\n", my_str);
+    return 0;
+}
+```
+![](img/2020-01-09-22-31-01.png)
+---
+
+-
+```c++
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main(){
+    char my_str[]="Blah blah, Hello World!!";
+    memset(my_str + 5, '@', 4);
+
+    printf("%s\n", my_str);
+    char *p = (char *)malloc(sizeof(char) * 20);
+    memset(p, '\0', 20);
+    memset(p, '-', 19);
+    printf("%s\n", p);   
+
+    return 0;
+}
+```
+![](img/2020-01-09-22-34-21.png)
+---
+
+
+## memcpy - copy from one memory block to other byte-by-byte
+```c++
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main(){
+    char source[]="Blah blah, Hello World!!";
+    char destination[100];
+    memcpy(destination, source, 4);
+    destination[4] = '\0';
+    printf("%s\n", destination);
+
+    return 0;
+}
+```
+![](img/2020-01-09-22-47-53.png)
 
 
 ```c++
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 
+int main(){
+    int *p = (int *)malloc(sizeof(int) *10);
+    int i = 0;
+    srand(time(NULL));
+    for(i=0; i<10; ++i){
+        *(p + i) = rand() % 100;
+    }
+    printf("Content of first block: ");
+    for(i = 0; i<10; ++i){
+        printf("%4d", *(p + i));
+    }
+    int *q = (int *)malloc(sizeof(int) * 5);
+
+    mmecpy(q, p, 20);
+
+    printf("Content of second block: ");
+    for(i = 0; i<5; ++i){
+        printf("%4d", *(q + i));
+    }
+
+    return 0;
+}
 ```
-
-
-```c++
-
-```
-
-
-
-
-```c++
-
-```
-
-
-```c++
-
-```
-
-
-```c++
-
-```
-
-
-
-
-```c++
-
-```
-
-
-```c++
-
-```
-
-
-```c++
-
-```
-
 
